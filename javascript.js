@@ -1,173 +1,195 @@
-/**
- * Parça, adicionei umas coisas a mais, isso vai te ajudar, deixei bem explicado pra você não ter muita duvida, qualquer coisa me chama que ajudo! 
- * 
- * Este script adiciona interatividade ao portfólio, incluindo:
- * - Menu mobile responsivo
- * - Scroll suave para links internos
- * - Efeito de header ao rolar a página
- * - Slider de depoimentos
- * - Validação básica do formulário de contato
- */
+// Variáveis globais para elementos DOM (cached for performance)
+let header;
+let logoImg;
+let navMenu;
+let menuMobileBtn;
+let menuMobileIcon;
 
-// Aguarda o carregamento completo do DOM antes de executar o script
-document.addEventListener('DOMContentLoaded', function() {
-    // =============================================
-    // 1. TOGGLE DO MENU MOBILE
-    // =============================================
-    const mobileMenuBtn = document.querySelector('.mobile-menu');
-    const navUl = document.querySelector('nav ul');
-    
-    // Adiciona evento de clique no ícone do menu mobile
-    mobileMenuBtn.addEventListener('click', function() {
-        // Alterna a classe 'show' no menu (mostra/esconde)
-        navUl.classList.toggle('show');
+// NAVBAR SCROLL EFFECT
+function handleScroll() {
+    // Se o header ainda não foi cacheado, tenta encontrar
+    if (!header) header = document.getElementById('main-header');
+    if (!header) return; // Se não encontrar, sai da função
+
+    const scrollClass = 'scrolled';
+    const shouldAddClass = window.scrollY > 100; // Define o threshold de rolagem (100px)
+
+    // Adiciona ou remove a classe 'scrolled' do header
+    header.classList.toggle(scrollClass, shouldAddClass);
+
+    // Nota: As alterações de tamanho do logo e cor do ícone do menu mobile
+    // são agora (e idealmente) controladas via CSS através da classe 'scrolled'.
+    // As linhas comentadas abaixo seriam para controle direto via JS,
+    // mas o CSS é mais performático para isso.
+    /*
+    if (!logoImg) logoImg = document.querySelector('.logo img');
+    if (logoImg) {
+        logoImg.style.width = shouldAddClass ? '250px' : '350px';
+    }
+
+    if (!menuMobileIcon) menuMobileIcon = document.querySelector('.menu-mobile i');
+    if (menuMobileIcon) {
+        menuMobileIcon.style.color = shouldAddClass ? '#333' : '#ECE9E0';
+    }
+    */
+}
+
+// MOBILE MENU - Controla a abertura e fechamento do menu mobile
+function setupMobileMenu() {
+    if (!menuMobileBtn) menuMobileBtn = document.getElementById('menuMobile');
+    if (!menuMobileBtn) return;
+
+    if (!navMenu) navMenu = document.getElementById('navMenu');
+    if (!navMenu) return;
+
+    if (!menuMobileIcon) menuMobileIcon = menuMobileBtn.querySelector('i');
+
+    menuMobileBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Impede que o clique no botão se propague e feche o menu
+        navMenu.classList.toggle('show');
+        document.body.classList.toggle('no-scroll', navMenu.classList.contains('show'));
+
+        // Altera o ícone do menu (hamburger <-> X)
+        if (menuMobileIcon) {
+            menuMobileIcon.classList.toggle('fa-bars');
+            menuMobileIcon.classList.toggle('fa-times');
+        }
     });
-    
-    // =============================================
-    // 2. SCROLL SUAVE PARA LINKS INTERNOS
-    // =============================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            // Previne o comportamento padrão do link
-            e.preventDefault();
-            
-            // Fecha o menu mobile se estiver aberto
-            navUl.classList.remove('show');
-            
-            // Obtém o ID do elemento alvo do link
+
+    // Fecha o menu ao clicar em links internos ou fora do menu
+    document.addEventListener('click', function(e) {
+        // Verifica se o clique não foi dentro do menu e não foi no botão do menu
+        // e se o menu está visível
+        if (navMenu.classList.contains('show') && !navMenu.contains(e.target) && e.target !== menuMobileBtn && !menuMobileBtn.contains(e.target)) {
+            navMenu.classList.remove('show');
+            document.body.classList.remove('no-scroll');
+            if (menuMobileIcon) {
+                menuMobileIcon.classList.add('fa-bars');
+                menuMobileIcon.classList.remove('fa-times');
+            }
+        }
+    });
+
+    // Fecha o menu mobile quando um link é clicado (para rolagem suave)
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                document.body.classList.remove('no-scroll');
+                if (menuMobileIcon) {
+                    menuMobileIcon.classList.add('fa-bars');
+                    menuMobileIcon.classList.remove('fa-times');
+                }
+            }
+        });
+    });
+}
+
+// SMOOTH SCROLL - Rolagem suave para seções
+function setupSmoothScroll() {
+    // Seleciona links na navegação e o botão na hero section
+    document.querySelectorAll('nav a[href^="#"], .smooth-scroll-btn').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
+
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-            
-            // Se o elemento alvo existir, faz o scroll suave até ele
+
             if (targetElement) {
+                // Se o header não foi cacheado, tenta encontrar
+                if (!header) header = document.getElementById('main-header');
+                // Usa a altura do header ou um valor padrão (ex: 80px) para o offset
+                // (útil se o header não carregar por algum motivo)
+                const headerHeight = header ? header.offsetHeight : 80;
+
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80, // Subtrai 80px para compensar o header fixo
-                    behavior: 'smooth' // Animação suave
+                    top: targetElement.offsetTop - headerHeight, // Ajusta a posição para considerar o header fixo
+                    behavior: 'smooth'
                 });
+
+                // Fecha o menu mobile se estiver aberto após a rolagem
+                if (navMenu && navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                    document.body.classList.remove('no-scroll');
+                    if (menuMobileIcon) {
+                        menuMobileIcon.classList.add('fa-bars');
+                        menuMobileIcon.classList.remove('fa-times');
+                    }
+                }
             }
         });
     });
-    
-    // =============================================
-    // 3. EFEITO NO HEADER AO ROLAR A PÁGINA
-    // =============================================
-    const header = document.querySelector('header');
-    
-    window.addEventListener('scroll', function() {
-        // Adiciona classe 'scrolled' quando a página é rolada mais de 100px
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+}
+
+// RESIZE HANDLER - Ajustes ao redimensionar a tela
+function handleResize() {
+    // Se o navMenu não foi cacheado, tenta encontrar
+    if (!navMenu) navMenu = document.getElementById('navMenu');
+
+    // Se a largura da janela for maior que 768px (breakpoint mobile) e o menu estiver visível
+    if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('show')) {
+        navMenu.classList.remove('show'); // Esconde o menu mobile
+        document.body.classList.remove('no-scroll'); // Libera o scroll do body
+
+        if (!menuMobileIcon) menuMobileIcon = document.querySelector('#menuMobile i');
+        if (menuMobileIcon) {
+            menuMobileIcon.classList.add('fa-bars'); // Garante que o ícone é o de hamburger
+            menuMobileIcon.classList.remove('fa-times');
         }
-    });
-    
-    // =============================================
-    // 4. SLIDER DE DEPOIMENTOS
-    // =============================================
-    const testimonials = document.querySelectorAll('.testimonial');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
-    let currentTestimonial = 0; // Índice do depoimento atual
-    
-    // Função para mostrar um depoimento específico
-    function showTestimonial(index) {
-        // Esconde todos os depoimentos
-        testimonials.forEach(testimonial => {
-            testimonial.classList.remove('active');
-        });
-        
-        // Mostra apenas o depoimento do índice especificado
-        testimonials[index].classList.add('active');
     }
-    
-    // Botão Anterior
-    prevBtn.addEventListener('click', function() {
-        currentTestimonial--;
-        // Se chegar no primeiro, volta para o último
-        if (currentTestimonial < 0) {
-            currentTestimonial = testimonials.length - 1;
-        }
-        showTestimonial(currentTestimonial);
-    });
-    
-    // Botão Próximo
-    nextBtn.addEventListener('click', function() {
-        currentTestimonial++;
-        // Se chegar no último, volta para o primeiro
-        if (currentTestimonial >= testimonials.length) {
-            currentTestimonial = 0;
-        }
-        showTestimonial(currentTestimonial);
-    });
-    
-    // Rotação automática dos depoimentos a cada 5 segundos
-    let testimonialInterval = setInterval(() => {
-        currentTestimonial++;
-        if (currentTestimonial >= testimonials.length) {
-            currentTestimonial = 0;
-        }
-        showTestimonial(currentTestimonial);
-    }, 5000);
-    
-    // Pausa a rotação automática quando o mouse está sobre o slider
-    const sliderContainer = document.querySelector('.testimonials-slider');
-    
-    sliderContainer.addEventListener('mouseenter', function() {
-        clearInterval(testimonialInterval);
-    });
-    
-    // Retoma a rotação automática quando o mouse sai do slider
-    sliderContainer.addEventListener('mouseleave', function() {
-        testimonialInterval = setInterval(() => {
-            currentTestimonial++;
-            if (currentTestimonial >= testimonials.length) {
-                currentTestimonial = 0;
-            }
-            showTestimonial(currentTestimonial);
-        }, 5000);
-    });
-    
-    // =============================================
-    // 5. FORMULÁRIO DE CONTATO
-    // =============================================
-    const contactForm = document.querySelector('.contact-form');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Previne o envio padrão do formulário
-            e.preventDefault();
-            
-            // Obtém os valores dos campos
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const phone = this.querySelector('input[type="tel"]').value;
-            const message = this.querySelector('textarea').value;
-            
-            // Validação básica - verifica se os campos obrigatórios foram preenchidos
-            if (!name || !email || !message) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-            
-            // Validação simples de e-mail
-            if (!email.includes('@') || !email.includes('.')) {
-                alert('Por favor, insira um endereço de e-mail válido.');
-                return;
-            }
-            
-            // Aqui você normalmente enviaria os dados para um servidor
-            // Para este exemplo, apenas mostra uma mensagem de sucesso
-            alert(`Obrigado pela sua mensagem, ${name}! Entrarei em contato em breve pelo e-mail ${email}.`);
-            
-            // Reseta o formulário após o envio
-            this.reset();
-        });
+    // Dispara o handleScroll caso o tamanho da tela mude e afete a visibilidade/estado do header
+    handleScroll();
+}
+
+// PRELOADER & COPYRIGHT YEAR - Funções para efeitos iniciais
+function setupInitialEffects() {
+    // Atualiza o ano do copyright automaticamente
+    const currentYearSpan = document.getElementById('currentYear');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
     }
-    
-    // =============================================
-    // INICIALIZAÇÃO
-    // =============================================
-    // Mostra o primeiro depoimento ao carregar a página
-    showTestimonial(currentTestimonial);
+
+    // Preloader - Garante que ele só apareça durante o carregamento
+    window.addEventListener('load', function() {
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                document.body.style.overflow = ''; // Garante que o scroll do body seja reativado
+            }, 500); // Duração da animação de fade-out (deve corresponder ao CSS)
+        }
+        // Adiciona uma classe ao elemento <html> para sinalizar que a página foi carregada
+        // Útil para estilos CSS baseados no estado de carregamento
+        document.documentElement.classList.add('loaded');
+    });
+}
+
+
+// INITIALIZATION - Função principal que configura todos os event listeners e chama as funções
+document.addEventListener('DOMContentLoaded', function() {
+    // Cache de elementos DOM essenciais na inicialização
+    header = document.getElementById('main-header');
+    logoImg = document.querySelector('.logo img');
+    navMenu = document.getElementById('navMenu');
+    menuMobileBtn = document.getElementById('menuMobile');
+    menuMobileIcon = menuMobileBtn ? menuMobileBtn.querySelector('i') : null; // Tenta pegar o ícone do botão mobile
+
+    // Configura os event listeners
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+
+    // Inicializa os componentes e efeitos
+    setupMobileMenu();
+    setupSmoothScroll();
+    setupInitialEffects();
+
+    // Dispara o handleScroll uma vez para definir o estado inicial do header
+    // (caso a página já carregue com scroll)
+    handleScroll();
+});
+
+// Fallback para garantir que a classe 'loaded' seja adicionada mesmo se houver recursos demorados
+window.addEventListener('load', function() {
+    document.documentElement.classList.add('loaded');
 });

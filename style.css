@@ -1,3 +1,4 @@
+/* Reset Básico */
 * {
     margin: 0;
     padding: 0;
@@ -5,6 +6,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Variáveis CSS */
 :root {
     --primary-color: #ff6b6b;
     --secondary-color: #4ecdc4;
@@ -15,11 +17,12 @@
 }
 
 body {
-    background-color: #f9f9f9;
+    background-color: #fdfcfc;
     color: var(--dark-color);
     line-height: 1.6;
 }
 
+/* Utility Class */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -31,6 +34,7 @@ section {
     padding: 80px 0;
 }
 
+/* Tipografia */
 h1, h2, h3, h4 {
     margin-bottom: 20px;
     font-weight: 700;
@@ -55,6 +59,7 @@ p {
     color: var(--gray-color);
 }
 
+/* Botões */
 .btn {
     display: inline-block;
     background-color: var(--primary-color);
@@ -85,37 +90,55 @@ span {
     color: var(--primary-color);
 }
 
-/* Header */
-header {
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.smooth-scroll-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #d56a40;
+    color: #ECE9E0;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.smooth-scroll-btn:hover {
+    background-color: #d56a59;
+    transform: translateY(-2px);
+}
+
+/* Header/Navbar */
+#main-header { /* ID alterado para main-header para corresponder ao JS */
+    background-color: transparent; /* Inicialmente transparente */
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 20px 0;
-    transition: all 0.3s ease;
-}
-
-header.scrolled {
-    padding: 15px 0;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-header .container {
+    padding: 10px 5%; /* Padding inicial, a torna mais alta */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.5s ease; /* Transição suave para todas as propriedades */
 }
 
-.logo h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0;
+/* Estilo do Header quando "scrolled" */
+#main-header.scrolled {
+    background-color: rgba(236, 233, 224, 0.9); /* Cor opaca com transparência */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 0px 5%; /* Padding menor quando rolado */
 }
 
-.logo p {
-    font-size: 0.9rem;
-    color: var(--gray-color);
-    margin-bottom: 0;
+.logo img {
+    width: 350px;
+    transition: all 0.5s ease; /* Transição para o tamanho do logo */
+}
+
+/* Tamanho do logo quando o header está "scrolled" */
+#main-header.scrolled .logo img {
+    width: 250px;
 }
 
 nav ul {
@@ -128,79 +151,86 @@ nav ul li {
 }
 
 nav ul li a {
-    text-decoration: none;
-    color: var(--dark-color);
-    font-weight: 600;
-    transition: color 0.3s ease;
-    position: relative;
+    transition: color 0.3s;
+    color: #ECE9E0; /* Cor inicial dos links */
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
-nav ul li a:hover {
-    color: var(--primary-color);
+/* Cor dos links quando o header está "scrolled" */
+#main-header.scrolled nav ul li a {
+    color: #333;
 }
 
-nav ul li a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    bottom: -5px;
-    left: 0;
-    transition: width 0.3s ease;
-}
-
-nav ul li a:hover::after {
-    width: 100%;
-}
-
-.mobile-menu {
-    display: none;
-    font-size: 1.5rem;
+.menu-mobile {
+    display: none; /* Escondido por padrão em desktop */
     cursor: pointer;
+    color: #ECE9E0; /* Cor inicial do ícone mobile */
+    font-size: 1.5rem;
+    transition: color 0.3s ease; /* Transição para a cor do ícone */
+}
+
+/* Cor do ícone mobile quando o header está "scrolled" */
+#main-header.scrolled .menu-mobile {
+    color: #333;
 }
 
 /* Hero Section */
 .hero {
-    padding-top: 150px;
-    background-color: white;
-}
-
-.hero .container {
+    height: 100vh;
+    background: url('/img/Foto inicio site.png') no-repeat center center/cover;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
+    color: #fffcf4;
+    position: relative;
+    padding-top: 100px; /* Ajuste para a altura inicial do header fixo */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
-    flex: 1;
-    padding-right: 50px;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+    filter:contrast(1);
 }
 
-.hero-content h1 {
-    font-size: 3rem;
-    line-height: 1.2;
+.hero-text h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.hero-text .subtitle {
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+.hero-text h2 {
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    color: #000000;
+    text-shadow: 5px 5px 5px rgb(0, 0, 0);
 }
 
-.hero-content h1 span {
-    display: block;
-}
-
-.hero-content p {
-    font-size: 1.1rem;
+.hero-text p {
+    font-size: 1.4rem;
     margin-bottom: 30px;
-    max-width: 500px;
-}
-
-.hero-image {
-    flex: 1;
-}
-
-.hero-image img {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    color: #000000;
+    text-shadow: 5px 5px 5px rgb(0, 0, 0);
 }
 
 /* About Section */
@@ -299,122 +329,61 @@ nav ul li a:hover::after {
     color: var(--secondary-color);
 }
 
-/* Testimonials Section */
-.testimonials {
-    background-color: white;
-}
-
-.testimonials-slider {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.testimonial {
-    display: none;
-    background-color: #f9f9f9;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    text-align: center;
-}
-
-.testimonial.active {
-    display: block;
-}
-
-.testimonial-content p {
-    font-size: 1.1rem;
-    font-style: italic;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.testimonial-content p::before,
-.testimonial-content p::after {
-    content: '"';
-    font-size: 2rem;
-    color: var(--primary-color);
-    opacity: 0.3;
-}
-
-.testimonial-content p::before {
-    margin-right: 5px;
-}
-
-.testimonial-content p::after {
-    margin-left: 5px;
-}
-
-.client-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.client-info img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 15px;
-}
-
-.client-info h4 {
-    margin-bottom: 5px;
-    font-size: 1.1rem;
-}
-
-.client-info span {
-    color: var(--gray-color);
-    font-size: 0.9rem;
-}
-
-.slider-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 15px;
-}
-
-.slider-controls button {
-    background-color: var(--primary-color);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slider-controls button:hover {
-    background-color: #ff5252;
-    transform: scale(1.1);
-}
-
-/* Contact Section */
+/* --- Seção de Contato (Melhorias para formulário compacto) --- */
 .contact .container {
     display: flex;
-    gap: 50px;
+    flex-direction: column; /* Padrão para mobile */
+    align-items: center; /* Centraliza conteúdo no mobile */
+    gap: 50px; /* Espaçamento entre as colunas no desktop, e entre elementos no mobile */
+    padding-top: 50px; /* Adiciona um padding extra para o conteúdo da seção, se necessário */
 }
 
-.contact-info {
-    flex: 1;
+/* NOVO: Wrapper para colocar info e formulário lado a lado */
+.contact-content-wrapper {
+    display: flex;
+    flex-direction: column; /* Padrão mobile: um abaixo do outro */
+    gap: 40px; /* Espaçamento entre info e form */
+    width: 100%;
+    max-width: 900px; /* Limita a largura total para não esticar demais */
+    align-items: flex-start; /* Alinha o conteúdo à esquerda dentro do wrapper */
 }
+
+
+.contact-info {
+    flex: 1; /* Permite que ocupe o espaço disponível */
+    min-width: 280px; /* Garante largura mínima para mobile */
+    max-width: 400px; /* Limita a largura para não ficar muito largo em desktop */
+    text-align: left; /* Alinha o texto das informações de contato à esquerda */
+    margin: 0 auto; /* Centraliza no mobile */
+}
+
+/* O título H2 já é centralizado globalmente. O subtítulo abaixo também. */
+/* Removido o H3 duplicado do formulário, então este h2 é o único título da seção. */
+.contact h2 { /* Título principal da seção */
+    text-align: center; /* Garante que o título principal da seção esteja centralizado */
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+.contact .section-subtitle {
+    text-align: center;
+    margin-bottom: 50px; /* Espaço após o subtítulo */
+}
+
 
 .contact-methods {
     margin: 30px 0;
+    /* Remover flex-wrap se adicionado anteriormente */
 }
 
 .contact-item {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px; /* Espaçamento ligeiramente reduzido */
 }
 
 .contact-item i {
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* Ícones um pouco maiores */
     color: var(--primary-color);
     margin-right: 15px;
     width: 30px;
@@ -423,181 +392,337 @@ nav ul li a:hover::after {
 
 .contact-item p {
     margin-bottom: 0;
-    font-weight: 600;
+    font-weight: 500; /* Fonte um pouco mais leve */
     color: var(--dark-color);
+    font-size: 1.05rem; /* Fonte um pouco maior para legibilidade */
 }
 
 .social-links {
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    justify-content: flex-start; /* Alinha os ícones à esquerda */
 }
 
 .social-links a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 45px; /* Tamanho um pouco maior */
+    height: 45px;
     background-color: var(--primary-color);
     color: white;
     border-radius: 50%;
+    font-size: 1.3rem; /* Tamanho do ícone dentro do círculo */
     transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil */
 }
 
 .social-links a:hover {
     background-color: #ff5252;
-    transform: translateY(-3px);
+    transform: translateY(-5px); /* Efeito de elevação maior */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
+/* Formulário de Contato (Mais compacto e bonito) */
 .contact-form {
-    flex: 1;
+    flex: 1.5; /* O formulário pode ocupar um pouco mais de espaço que as infos */
+    min-width: 300px; /* Garante largura mínima */
     background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 40px; /* Padding reduzido para torná-lo mais compacto */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin: 0 auto; /* Centraliza no mobile */
 }
+
+/* Removido: .contact-form h3::after (já que o h3 será removido) */
+
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Espaçamento entre grupos de formulário */
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 0.95rem;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 12px 15px; /* Padding reduzido para inputs */
+    border: 1px solid #e0e0e0; /* Borda mais fina */
+    border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background-color: #f9f9f9;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+    background-color: white;
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.1); /* Sombra mais sutil */
 }
 
 .form-group textarea {
-    height: 150px;
-    resize: none;
+    height: 120px; /* Altura reduzida para a textarea */
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+}
+
+/* Efeito de ícone nos campos */
+.form-group.with-icon input {
+    padding-left: 40px; /* Espaço para o ícone */
+}
+
+.form-group.name::before,
+.form-group.email::before,
+.form-group.phone::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 59px; /* Ajusta a posição vertical do ícone, centralizado em relação ao input */
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+}
+
+.form-group.name::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23292f36'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
+}
+
+.form-group.email::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23292f36'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+}
+
+.form-group.phone::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23292f36'%3E%3Cpath d='M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z'/%3E%3C/svg%3E");
+}
+
+/* Botão do formulário */
+.form-submit {
+    text-align: center;
+    margin-top: 25px; /* Espaço acima do botão */
+}
+
+.form-submit .btn {
+    padding: 12px 30px; /* Padding ajustado para o botão */
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.form-submit .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
 
 /* Footer */
 footer {
     background-color: var(--dark-color);
-    color: white;
-    padding: 60px 0 0;
+    color: var(--light-color);
+    padding: 80px 0 0;
+    position: relative;
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 60px;
 }
 
-.footer-logo h3 {
+.footer-column h3 {
     color: white;
-    margin-bottom: 10px;
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-.footer-logo p {
-    color: #aaa;
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color);
 }
 
-.footer-links h4,
-.footer-services h4,
-.footer-contact h4 {
-    color: white;
+.footer-column p {
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 20px;
-    font-size: 1.2rem;
+    line-height: 1.7;
 }
 
-.footer-links ul,
-.footer-services ul {
+.footer-column ul { /* Adicionado para resetar margens/padding da lista no footer */
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.footer-links li,
-.footer-services li {
-    margin-bottom: 10px;
+.footer-column ul li { /* Estilo para itens da lista no footer */
+    margin-bottom: 12px;
 }
 
-.footer-links a,
-.footer-services a {
-    color: #aaa;
+
+.footer-column ul li a { /* Estilo para links da lista no footer */
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    display: block;
 }
 
-.footer-links a:hover,
-.footer-services a:hover {
-    color: white;
-}
-
-.footer-contact p {
-    color: #aaa;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.footer-contact i {
-    margin-right: 10px;
+.footer-column ul li a:hover {
     color: var(--primary-color);
+    transform: translateX(5px);
 }
 
 .footer-bottom {
     text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #444;
+    padding: 25px 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre copyright e ícones */
 }
 
 .footer-bottom p {
-    color: #aaa;
     margin-bottom: 0;
-    font-size: 0.9rem;
 }
+
+.footer-bottom .social-icons { /* Estilo para os ícones sociais no footer-bottom */
+    display: flex;
+    gap: 15px;
+}
+
+.footer-bottom .social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-bottom .social-icons a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* Preloader */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fdfcfc; /* Cor de fundo do preloader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out; /* Transição para o fade-out */
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none; /* Garante que não interfira com cliques após o fade-out */
+}
+
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid var(--primary-color); /* Primary color */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 /* Responsividade */
 @media (max-width: 992px) {
-    .hero .container,
-    .about .container,
-    .contact .container {
-        flex-direction: column;
-    }
-    
-    .hero-content,
-    .about-content,
-    .contact-info {
-        padding-right: 0;
-        margin-bottom: 50px;
+    .hero {
+        padding-top: 120px;
     }
     
     .hero-content h1 {
         font-size: 2.5rem;
     }
+    
+    .about .container,
+    .contact .container {
+        flex-direction: column;
+    }
+    
+    .about-content,
+    .contact-info {
+        margin-bottom: 50px;
+    }
 }
+
+@media (min-width: 769px) { /* A partir de tablets/desktops para o layout flex */
+    .contact-content-wrapper {
+        flex-direction: row; /* Layout lado a lado em desktop */
+        display: flex;
+        justify-content: center; /* Centraliza as duas colunas */
+        align-items: flex-start; /* Alinha o topo das colunas */
+    }
+    .contact-info,
+    .contact-form {
+        margin: 0; /* Remove margin auto para alinhar flex */
+    }
+    .contact-info {
+        max-width: 350px; /* Limita a largura para não ficar muito largo */
+    }
+    /* Reajuste para alinhamento em desktop se necessário */
+    .contact-info .social-links {
+        justify-content: flex-start;
+    }
+    .contact-info .contact-item {
+        justify-content: flex-start;
+    }
+}
+
 
 @media (max-width: 768px) {
     section {
         padding: 60px 0;
     }
     
+    /* Mostrar o botão do menu mobile */
+    .menu-mobile {
+        display: block;
+    }
+    
     nav ul {
-        display: none;
+        display: none; /* Escondido por padrão no mobile */
         position: absolute;
-        top: 100%;
+        top: 100%; /* Abaixo do header */
         left: 0;
         width: 100%;
         background-color: white;
         flex-direction: column;
         padding: 20px 0;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
     }
     
+    /* Mostrar o menu quando a classe 'show' é adicionada pelo JS */
     nav ul.show {
         display: flex;
     }
@@ -607,21 +732,39 @@ footer {
         text-align: center;
         padding: 10px 0;
     }
-    
-    .mobile-menu {
-        display: block;
+
+    nav ul li a { /* Cor dos links no menu mobile aberto */
+        color: var(--dark-color);
     }
     
-    .hero {
-        padding-top: 120px;
-    }
-    
-    .hero-content h1 {
+    .hero-text h1 {
         font-size: 2rem;
     }
     
     .services-grid {
         grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-column h3::after {
+        margin: 15px auto 0; /* Centraliza a linha do h3 no mobile */
+    }
+
+    /* Ajustes específicos para a seção de contato no mobile */
+    .contact-form {
+        padding: 30px 20px; /* Reduz padding em mobile para o formulário */
+    }
+    .contact-info {
+        text-align: center; /* Centraliza as informações no mobile */
+    }
+    .contact-item {
+        justify-content: center; /* Centraliza itens de contato */
+    }
+    .social-links {
+        justify-content: center; /* Centraliza ícones sociais */
     }
 }
 
@@ -630,15 +773,21 @@ footer {
         padding: 10px 25px;
     }
     
-    .hero-content h1 {
+    .hero-text h1 {
         font-size: 1.8rem;
     }
     
-    .testimonial {
-        padding: 30px 20px;
-    }
-    
     .contact-form {
-        padding: 30px 20px;
+        padding: 25px 15px; /* Reduz ainda mais o padding em telas muito pequenas */
+    }
+    .form-group.with-icon input {
+        padding-left: 30px; /* Ajusta o padding para ícones em telas menores */
+    }
+    .form-group.name::before,
+    .form-group.email::before,
+    .form-group.phone::before {
+        left: 10px; /* Ajusta a posição do ícone em telas muito pequenas */
+        width: 18px; /* Ícones ligeiramente menores */
+        height: 18px;
     }
 }
