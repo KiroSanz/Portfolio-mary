@@ -489,7 +489,7 @@ nav ul li a {
     content: '';
     position: absolute;
     left: 15px;
-    top: 55%; /* Ajusta a posição vertical do ícone, centralizado em relação ao input */
+    top: 57px; /* Ajusta a posição vertical do ícone, centralizado em relação ao input */
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
