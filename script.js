@@ -133,7 +133,7 @@ function handleResize() {
 
         if (!menuMobileIcon) menuMobileIcon = document.querySelector('#menuMobile i');
         if (menuMobileIcon) {
-            menuMobileIcon.classList.add('fa-bars'); // Garante que o ícone é o de hamburger
+            menuMobileIcon.classList.add('fa-bars');
             menuMobileIcon.classList.remove('fa-times');
         }
     }

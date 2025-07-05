@@ -12,7 +12,7 @@
 <body>
     <header id="main-header">
         <div class="logo">
-            <img src="/img/Logo_Personal_Trainer_Minimalista_Roxo_e_Lilás-removebg-preview.png" alt="Mary Galvani Personal Trainer" loading="lazy">
+            <img src="/img/logo.png" alt="Mary Galvani Personal Trainer" loading="lazy">
         </div>
         <nav>
             <ul id="navMenu">
@@ -118,56 +118,56 @@
     </section>
 
     <section id="contato" class="contact">
-      <div class="container">
-        <h2>Entre em Contato</h2>
-        <p class="section-subtitle">
-          Agende sua avaliação gratuita ou tire suas dúvidas
-        </p>
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <p class="section-subtitle">
+                Agende sua avaliação gratuita ou tire suas dúvidas
+            </p>
 
-        <div class="contact-content-wrapper"> <div class="contact-info">
-                <div class="contact-methods">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <p>(11) 98765-4321</p>
+            <div class="contact-content-wrapper"> <div class="contact-info">
+                    <div class="contact-methods">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <p>(11) 98765-4321</p>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <p>contato@marygalvani.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>São Paulo - SP</p>
+                        </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>contato@marygalvani.com</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>São Paulo - SP</p>
+
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+5511982678745"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
 
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/+5511982678745"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-
-            <form class="contact-form">
-                <div class="form-group name with-icon">
-                    <label for="name">Seu Nome</label>
-                    <input type="text" id="name" placeholder="Digite seu nome completo" required />
-                </div>
-                <div class="form-group email with-icon">
-                    <label for="email">Seu E-mail</label>
-                    <input type="email" id="email" placeholder="Digite seu melhor e-mail" required />
-                </div>
-                <div class="form-group phone with-icon">
-                    <label for="phone">Telefone (Opcional)</label>
-                    <input type="tel" id="phone" placeholder="Digite seu telefone" />
-                </div>
-                <div class="form-group">
-                    <label for="message">Sua Mensagem</label>
-                    <textarea id="message" placeholder="Como posso te ajudar?" required></textarea>
-                </div>
-                <div class="form-submit">
-                    <button type="submit" class="btn">Enviar Mensagem</button>
-                </div>
-            </form>
-        </div> </div>
+                <form class="contact-form">
+                    <div class="form-group name with-icon">
+                        <label for="name">Seu Nome</label>
+                        <input type="text" id="name" placeholder="Digite seu nome completo" required />
+                    </div>
+                    <div class="form-group email with-icon">
+                        <label for="email">Seu E-mail</label>
+                        <input type="email" id="email" placeholder="Digite seu melhor e-mail" required />
+                    </div>
+                    <div class="form-group phone with-icon">
+                        <label for="phone">Telefone (Opcional)</label>
+                        <input type="tel" id="phone" placeholder="Digite seu telefone" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Sua Mensagem</label>
+                        <textarea id="message" placeholder="Como posso te ajudar?" required></textarea>
+                    </div>
+                    <div class="form-submit">
+                        <button type="submit" class="btn">Enviar Mensagem</button>
+                    </div>
+                </form>
+            </div> </div>
     </section>
 
     <footer>
@@ -214,43 +214,5 @@
     </div>
     
     <script src="script.js"></script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>

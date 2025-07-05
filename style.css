@@ -117,23 +117,26 @@ span {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 10px 5%; /* Padding inicial, a torna mais alta */
+    margin-bottom: 150px;
+    padding: 0 5%; /* Padding inicial, a torna mais alta */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.5s ease; /* Transição suave para todas as propriedades */
+    transition: all 1s ease; /* Transição suave para todas as propriedades */
 }
 
 /* Estilo do Header quando "scrolled" */
 #main-header.scrolled {
     background-color: rgba(236, 233, 224, 0.9); /* Cor opaca com transparência */
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 0px 5%; /* Padding menor quando rolado */
+    padding: 2px 5%;
+    height: 150px; /* Padding menor quando rolado */
+    transition: all 1s ease; /* Transição suave para todas as propriedades */
 }
 
 .logo img {
     width: 350px;
-    transition: all 0.5s ease; /* Transição para o tamanho do logo */
+    transition: all 1s ease; /* Transição para o tamanho do logo */
 }
 
 /* Tamanho do logo quando o header está "scrolled" */
@@ -486,7 +489,7 @@ nav ul li a {
     content: '';
     position: absolute;
     left: 15px;
-    top: 59px; /* Ajusta a posição vertical do ícone, centralizado em relação ao input */
+    top: 55%; /* Ajusta a posição vertical do ícone, centralizado em relação ao input */
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
@@ -678,7 +681,6 @@ footer {
 @media (min-width: 769px) { /* A partir de tablets/desktops para o layout flex */
     .contact-content-wrapper {
         flex-direction: row; /* Layout lado a lado em desktop */
-        display: flex;
         justify-content: center; /* Centraliza as duas colunas */
         align-items: flex-start; /* Alinha o topo das colunas */
     }
